@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados da API</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dados da API</h1>
+    <table id="dados-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sensor</th>
+                <th>Botão</th>
+                <th>Liga Robô</th>
+                <th>Reset Contador</th>
+                <th>Valor Contagem</th>
+            </tr>
+        </thead>
+        <tbody id="dados-table-body">
+            <!-- Aqui os dados serão adicionados dinamicamente pelo script -->
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/dados/',
+                method: 'GET',
+                success: function(data){
+                    var tableBody = $('#dados-table-body');
+                    $.each(data, function(index, item){
+                        tableBody.append('<tr><td>' + item.id + '</td><td>' + item.sensor + '</td><td>' + item.botao + '</td><td>' + item.liga_robo + '</td><td>' + item.reset_contador + '</td><td>' + item.valor_contagem + '</td></tr>');
+                    });
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
